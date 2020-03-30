@@ -14,14 +14,12 @@ using namespace std;
 Repo::Repo()
 {
     this->n = 0;
-    cout << "The CONSTRUCTOR is called" << endl;
 }
 Repo::~Repo()
 {
     this->n = 0;
-    cout << "The DESTRUCTOR is called" << endl;
 }
-void Repo::insert_payment(Payments &p)
+void Repo::add_payment(Payments& p)
 {
     this->payments[this->n++] = p;
 }
@@ -34,14 +32,6 @@ Payments* Repo::get_all()
 int Repo::get_size()
 {
     return this->n;
-}
-
-void Repo::add_payment(int amount, char* type)
-{
-    time_t now = time(0);
-    tm* ltm = localtime(&now);
-    Payments p(ltm->tm_mday, amount, type);
-    this->payments[this->n++] = p;
 }
 
 void Repo::update_payment(Payments& pay, int day, int amount, char *type)
@@ -62,14 +52,72 @@ int Repo::search(const Payments& p)
     return -1;
 }
 
-void Repo::delete_by_day(Payments p)
+int Repo::search_day(int day)
 {
-    int pos = this->search(p);
     int n = this->get_size();
+    for (int i = 0; i < n; i++)
+    {
+        if (this->payments[i].get_day() == day)
+            return i;
+    }
+    return -1;
+}
+
+int Repo::search_type(char* type)
+{
+    int n = this->get_size();
+    for (int i = 0; i < n; i++)
+    {
+        if (strcmp(this->payments[i].get_type(), type) == 0)
+            return i;
+    }
+    return -1;
+}
+/*
+void Repo::delete_by_day(int day)
+{
+    int pos = this->search_day(day);
+    int nr = this->get_size();
     if (pos != -1)
     {
-        for (int i = 0; i < n - 1; i++)
+        for (int i = pos; i < nr - 1; i++)
             this->payments[i] = this->payments[i+1];
+        this->n = nr - 1;
     }
 }
 
+void Repo::delete_by_type(char *type)
+{
+    int pos = this->search_type(type);
+    int nr = this->get_size();
+    if (pos != -1)
+    {
+        for (int i = pos; i < nr - 1; i++)
+            this->payments[i] = this->payments[i + 1];
+        this->n = nr - 1;
+    }
+}
+*/
+void Repo::delete_payment(Payments& p, int op)
+{
+    int pos;
+    if (op == 1)
+    {
+        pos = this->search(p);
+    }
+    else if (op == 2)
+    {
+        pos = this->search_day(p.get_day());
+    }
+    else
+    {
+        pos = this->search_type(p.get_type());
+    }
+    int nr = this->get_size();
+    if (pos != -1)
+    {
+        for (int i = pos; i < nr - 1; i++)
+            this->payments[i] = this->payments[i + 1];
+        this->n = nr - 1;
+    }
+}

@@ -33,7 +33,6 @@ Payments::Payments(int day, int amount, char* type)
 
 Payments::Payments(const Payments& p)
 {
-    cout << "now it's copying the cpnstructor" << endl;
     this->day = p.day;
     this->amount = p.amount;
     this->type = new char[strlen(p.type) + 1];

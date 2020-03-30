@@ -21,19 +21,13 @@ void test_repo()
     Repo pay;
     
     assert(pay.get_size() == 0);
-    pay.add_payment(12, type);
+    pay.add_payment(p);
     assert(pay.get_size() == 1);
-    pay.insert_payment(p);
-    assert(pay.get_size() == 2);
     
     Payments* test = new Payments[pay.get_size()];
     test = pay.get_all();
     
-    time_t now = time(0);
-    tm* ltm = localtime(&now);
+    assert(test[0] == p);
     
-    Payments t(ltm->tm_mday, 12, type);
-    
-    assert(test[1] == p);
-    assert(test[0] == t);
+    cout << "Test repo DONE!" << endl;
 }

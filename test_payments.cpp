@@ -40,6 +40,8 @@ void test_getter()
     assert(strcmp(pay_1.get_type(), type_1) == 0);
     assert(strcmp(pay_2.get_type(), type_2) == 0);
     assert(strcmp(pay_3.get_type(), type_3) == 0);
+    
+    cout << "Test getter from Payments DONE!" << endl;
 }
 
 void test_setter()
@@ -60,6 +62,8 @@ void test_setter()
     strcpy(new_type, "Internet");
     pay.set_type(new_type);
     assert(strcmp(pay.get_type(), "Internet") == 0);
+    
+    cout << "Test setter from Payments DONE!" << endl;
 }
 
 void test_eq()
